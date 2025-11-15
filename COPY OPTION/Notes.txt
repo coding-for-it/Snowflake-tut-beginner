@@ -1,0 +1,15 @@
+Copy Options → Settings for how loading happens.
+
+Validation Mode → Check data without loading.
+
+Rejected Records → Failed rows you can review.
+
+Size Limits → Ideal file size 100–250MB.
+
+Return Failed Only → Show only bad rows.
+
+Truncate Columns → Cut long values instead of error.
+
+Force → Load file again even if already loaded.
+
+Load History → Past load logs.
