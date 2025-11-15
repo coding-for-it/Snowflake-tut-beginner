@@ -1,0 +1,38 @@
+-- 0. Create and use a new database
+CREATE OR REPLACE DATABASE assignment_db;
+USE DATABASE assignment_db;
+
+-- 1. Create the table
+CREATE OR REPLACE TABLE employees (
+    customer_id INT,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(50),
+    age INT,
+    department VARCHAR(50)
+);
+
+-- 2. Create a stage pointing to S3
+CREATE OR REPLACE STAGE my_stage
+URL='s3://snowflake-assignments-mc/copyoptions/example1';
+
+-- 3. Create a file format
+CREATE OR REPLACE FILE FORMAT my_csv_format
+TYPE = CSV
+FIELD_DELIMITER = ','
+SKIP_HEADER = 1;
+
+-- 4. Validate the data only (checks for errors, no rows loaded)
+COPY INTO employees
+FROM @my_stage
+FILE_FORMAT = (FORMAT_NAME = my_csv_format)
+VALIDATION_MODE = 'RETURN_ERRORS';
+
+-- 5. Load the data ignoring errors
+COPY INTO employees
+FROM @my_stage
+FILE_FORMAT = (FORMAT_NAME = my_csv_format)
+ON_ERROR = 'CONTINUE';
+
+-- Optional: Check how many rows have been loaded
+SELECT COUNT(*) AS rows_loaded FROM employees;
