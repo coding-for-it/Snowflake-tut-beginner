@@ -1,0 +1,28 @@
+-- 0. Use or create database
+CREATE DATABASE IF NOT EXISTS EXERCISE_DB;
+USE DATABASE EXERCISE_DB;
+USE SCHEMA EXERCISE_DB.PUBLIC;
+
+-- 1. Create a stage pointing to the S3 bucket
+CREATE OR REPLACE STAGE UNSTRUCTURED_STAGE
+    URL='s3://snowflake-assignments-mc/unstructureddata/';
+
+-- 2. Create a JSON file format
+CREATE OR REPLACE FILE FORMAT JSON_FILE_FORMAT
+    TYPE = JSON;
+
+-- 3. Create table JSON_RAW
+CREATE OR REPLACE TABLE JSON_RAW (
+    raw VARIANT
+);
+
+-- 4. Copy raw JSON data into the table
+COPY INTO JSON_RAW
+FROM @UNSTRUCTURED_STAGE
+FILE_FORMAT = (FORMAT_NAME = JSON_FILE_FORMAT);
+
+-- 5. Query: Get last name of person with id = 1
+SELECT raw:last_name::STRING AS last_name
+FROM JSON_RAW
+WHERE raw:id = 1;
+s

@@ -1,0 +1,24 @@
+CREATE DATABASE IF NOT EXISTS OUR_FIRST_DB;
+CREATE SCHEMA IF NOT EXISTS OUR_FIRST_DB.PUBLIC;
+
+CREATE OR REPLACE TABLE OUR_FIRST_DB.PUBLIC.EMP_RANDOM (
+    emp_id INT,
+    first_name STRING,
+    last_name STRING,
+    age INT,
+    department STRING
+);
+
+INSERT INTO OUR_FIRST_DB.PUBLIC.EMP_RANDOM (emp_id, first_name, last_name, age, department) VALUES
+    (1, 'Liam', 'Anderson', 29, 'IT'),
+    (2, 'Sofia', 'Martinez', 34, 'HR'),
+    (3, 'Hiroshi', 'Tanaka', 41, 'Finance'),
+    (4, 'Elena', 'Popov', 27, 'Marketing'),
+    (5, 'Amina', 'Haddad', 31, 'Operations'),
+    (6, 'Lucas', 'Schneider', 38, 'Engineering'),
+    (7, 'Giulia', 'Rossi', 25, 'Design'),
+    (8, 'Arjun', 'Mehra', 30, 'IT'),
+    (9, 'Marie', 'Dubois', 36, 'Finance'),
+    (10, 'Chen', 'Wei', 28, 'Data Science');
+
+SELECT * FROM OUR_FIRST_DB.PUBLIC.EMP_RANDOM;
